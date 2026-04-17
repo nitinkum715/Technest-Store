@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNest Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f6fb;
+            color: #1a1a2e;
+            min-height: 100vh;
+        }
+
+        /* ── HEADER ── */
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+            color: #fff;
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 68px;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: #e94560; }
+        .tagline {
+            font-size: 0.75rem;
+            color: #a0a8c0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .cart-btn {
+            background: #e94560;
+            color: #fff;
+            border: none;
+            padding: 0.55rem 1.2rem;
+            border-radius: 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.15s, background 0.2s;
+        }
+        .cart-btn:hover { background: #c73652; transform: scale(1.04); }
+        .cart-count {
+            background: #fff;
+            color: #e94560;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* ── HERO BANNER ── */
+        .hero {
+            background: linear-gradient(120deg, #0f3460 0%, #16213e 100%);
+            color: #fff;
+            text-align: center;
+            padding: 3.5rem 1rem 3rem;
+        }
+        .hero h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 0.6rem;
+        }
+        .hero h2 span { color: #e94560; }
+        .hero p { color: #a0a8c0; font-size: 1.05rem; }
+        .badge-row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 1.4rem;
+            flex-wrap: wrap;
+        }
+        .badge {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #c8d0e8;
+            padding: 0.3rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── SECTION TITLE ── */
+        .section-title {
+            max-width: 1200px;
+            margin: 2.5rem auto 1.2rem;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-title h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #d8dce8;
+        }
+
+        /* ── PRODUCT GRID ── */
+        .grid {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 22px;
+        }
+
+        /* ── PRODUCT CARD ── */
+        .product {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #e4e8f0;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .product:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(15,52,96,0.12);
+        }
+        .product-img-wrap {
+            background: #f0f3fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.4rem;
+            height: 190px;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+        .product:hover .product-img-wrap img { transform: scale(1.06); }
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #e94560;
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .product-info {
+            padding: 1rem 1.1rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .product-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+        .product-price {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0f3460;
+            margin-bottom: 0.9rem;
+        }
+        .product-price .original {
+            font-size: 0.78rem;
+            color: #9aa0b5;
+            text-decoration: line-through;
+            font-weight: 400;
+            margin-left: 6px;
+        }
+        .product-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+        }
+        .btn-cart {
+            flex: 1;
+            background: #e94560;
+            color: #fff;
+            border: none;
+            padding: 0.55rem 0.8rem;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.12s;
+        }
+        .btn-cart:hover { background: #c73652; transform: scale(1.02); }
+        .btn-cart:active { transform: scale(0.97); }
+        .btn-view {
+            background: #f0f3fa;
+            color: #0f3460;
+            border: none;
+            padding: 0.55rem 0.9rem;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .btn-view:hover { background: #d8ddf0; }
+
+        /* ── CART PANEL ── */
+        .cart-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 200;
+        }
+        .cart-panel {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            max-width: 100vw;
+            height: 100vh;
+            background: #fff;
+            z-index: 201;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.3s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: -4px 0 24px rgba(0,0,0,0.15);
+        }
+        .cart-panel.open { right: 0; }
+        .cart-overlay.open { display: block; }
+        .cart-header {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 1.2rem 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .cart-header h3 { font-size: 1.1rem; font-weight: 700; }
+        .close-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.2rem;
+        }
+        .cart-empty {
+            text-align: center;
+            color: #9aa0b5;
+            padding: 3rem 1rem;
+            font-size: 0.95rem;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid #eef0f6;
+            gap: 10px;
+        }
+        .cart-item-name { font-size: 0.9rem; font-weight: 500; color: #1a1a2e; flex: 1; }
+        .cart-item-price { font-size: 0.9rem; font-weight: 700; color: #0f3460; white-space: nowrap; }
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: #e94560;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+        .cart-footer {
+            padding: 1.2rem 1.4rem;
+            border-top: 1px solid #eef0f6;
+        }
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+        }
+        .btn-checkout {
+            width: 100%;
+            background: #e94560;
+            color: #fff;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-checkout:hover { background: #c73652; }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: #1a1a2e;
+            color: #fff;
+            padding: 0.7rem 1.4rem;
+            border-radius: 30px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 999;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #1a1a2e;
+            color: #a0a8c0;
+            text-align: center;
+            padding: 1.8rem;
+            font-size: 0.82rem;
+        }
+        footer strong { color: #fff; }
+
+        @media (max-width: 600px) {
+            .hero h2 { font-size: 1.7rem; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+            .product-img-wrap { height: 150px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="header-inner">
+        <div>
+            <div class="logo">Tech<span>Nest</span></div>
+            <div class="tagline">by Nitin &amp; Anshika</div>
+        </div>
+        <button class="cart-btn" onclick="openCart()">
+            🛒 Cart <span class="cart-count" id="cartCount">0</span>
+        </button>
+    </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+    <h2>Your Smart <span>Tech Store</span></h2>
+    <p>Premium gadgets at unbeatable prices — delivered to your door</p>
+    <div class="badge-row">
+        <span class="badge">🚚 Free Delivery</span>
+        <span class="badge">🔒 Secure Payments</span>
+        <span class="badge">🔄 Easy Returns</span>
+        <span class="badge">⭐ Top Rated</span>
+    </div>
+</div>
+
+<!-- SECTION TITLE -->
+<div class="section-title">
+    <h3>Featured Products</h3>
+</div>
+
+<!-- PRODUCT GRID -->
+<div class="grid">
+
+    <div class="product">
+        <div class="product-img-wrap">
+            <span class="product-badge">Trending</span>
+            <img src="28.webp" alt="Night Lamp" onerror="this.src='https://placehold.co/200x160/e0e8f8/0f3460?text=Night+Lamp'">
+        </div>
+        <div class="product-info">
+            <div class="product-name">Night Lamp</div>
+            <div class="product-price">₹999 <span class="original">₹1,499</span></div>
+            <div class="product-actions">
+                <a class="btn-view" href="https://www.figliving.com/collections/table-lamps-and-lights/products/wavy-contemporary-metal-base-table-lamp" target="_blank">View</a>
+                <button class="btn-cart" onclick="addToCart('Night Lamp', 999)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="product">
+        <div class="product-img-wrap">
+            <span class="product-badge">Best Seller</span>
+            <img src="speaker.jpeg" alt="Bluetooth Speaker" onerror="this.src='https://placehold.co/200x160/e0e8f8/0f3460?text=BT+Speaker'">
+        </div>
+        <div class="product-info">
+            <div class="product-name">Bluetooth Speaker</div>
+            <div class="product-price">₹499 <span class="original">₹799</span></div>
+            <div class="product-actions">
+                <a class="btn-view" href="https://www.flipkart.com/jbl-go-essential-rich-bass-5-hrs-playtime-ipx7-waterproof-ultra-portable-3-1-w-bluetooth-speaker/p/itmabad18a769b0e" target="_blank">View</a>
+                <button class="btn-cart" onclick="addToCart('Bluetooth Speaker', 499)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="product">
+        <div class="product-img-wrap">
+            <img src="pendrive.webp" alt="Pendrive" onerror="this.src='https://placehold.co/200x160/e0e8f8/0f3460?text=Pendrive'">
+        </div>
+        <div class="product-info">
+            <div class="product-name">Pendrive 128GB</div>
+            <div class="product-price">₹399 <span class="original">₹649</span></div>
+            <div class="product-actions">
+                <a class="btn-view" href="https://www.flipkart.com/sandisk-sdddc3-128g-i46lpd-128-gb-pen-drive-compatible-desktop-computer-laptop-mobile-usb-3-2-plastic-case/p/itm06e743bb390f7" target="_blank">View</a>
+                <button class="btn-cart" onclick="addToCart('Pendrive 128GB', 399)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="product">
+        <div class="product-img-wrap">
+            <span class="product-badge">Hot Deal</span>
+            <img src="headphones.webp" alt="Headphones" onerror="this.src='https://placehold.co/200x160/e0e8f8/0f3460?text=Headphones'">
+        </div>
+        <div class="product-info">
+            <div class="product-name">Headphones</div>
+            <div class="product-price">₹999 <span class="original">₹1,799</span></div>
+            <div class="product-actions">
+                <a class="btn-view" href="https://www.flipkart.com/goboult-z40-enc-mic-60hr-battery-metal-finish-low-latency-5-3v-bluetooth/p/itm21d4f04d5f53e" target="_blank">View</a>
+                <button class="btn-cart" onclick="addToCart('Headphones', 999)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="product">
+        <div class="product-img-wrap">
+            <img src="watch.webp" alt="Smart Watch" onerror="this.src='https://placehold.co/200x160/e0e8f8/0f3460?text=Smart+Watch'">
+        </div>
+        <div class="product-info">
+            <div class="product-name">Smart Watch</div>
+            <div class="product-price">₹1,999 <span class="original">₹3,499</span></div>
+            <div class="product-actions">
+                <a class="btn-view" href="https://www.flipkart.com/search?q=smart%20watch" target="_blank">View</a>
+                <button class="btn-cart" onclick="addToCart('Smart Watch', 1999)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="product">
+        <div class="product-img-wrap">
+            <img src="magsafe.webp" alt="Magsafe" onerror="this.src='https://placehold.co/200x160/e0e8f8/0f3460?text=MagSafe'">
+        </div>
+        <div class="product-info">
+            <div class="product-name">MagSafe Charger</div>
+            <div class="product-price">₹699 <span class="original">₹1,199</span></div>
+            <div class="product-actions">
+                <a class="btn-view" href="https://www.flipkart.com/tarunstore-wired-wireless-magsafe-mini-pocket-size-power-bank-charging-pad/p/itm11b664dda91ac" target="_blank">View</a>
+                <button class="btn-cart" onclick="addToCart('MagSafe Charger', 699)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="product">
+        <div class="product-img-wrap">
+            <span class="product-badge">New</span>
+            <img src="ssd.webp" alt="SSD" onerror="this.src='https://placehold.co/200x160/e0e8f8/0f3460?text=SSD'">
+        </div>
+        <div class="product-info">
+            <div class="product-name">Solid State Drive</div>
+            <div class="product-price">₹2,999 <span class="original">₹4,499</span></div>
+            <div class="product-actions">
+                <a class="btn-view" href="https://www.flipkart.com/consistent-s7-256-gb-desktop-laptop-all-one-pc-s-black-sata-iii-internal-solid-state-drive-ssd-ctssd256s7/p/itm6019156f1f743" target="_blank">View</a>
+                <button class="btn-cart" onclick="addToCart('Solid State Drive', 2999)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="product">
+        <div class="product-img-wrap">
+            <img src="keyboard.webp" alt="Keyboard" onerror="this.src='https://placehold.co/200x160/e0e8f8/0f3460?text=Keyboard'">
+        </div>
+        <div class="product-info">
+            <div class="product-name">RGB Gaming Keyboard</div>
+            <div class="product-price">₹999 <span class="original">₹1,599</span></div>
+            <div class="product-actions">
+                <a class="btn-view" href="https://www.flipkart.com/frontech-kb-0042-wired-keyboard-rgb-backlight-104-keys-usb-standard-gaming-compatible-desktop-laptop-mac-mode-stand-support-multimedia-keys/p/itm9d44588455b56" target="_blank">View</a>
+                <button class="btn-cart" onclick="addToCart('RGB Gaming Keyboard', 999)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- CART OVERLAY + PANEL -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+        <h3>🛒 Your Cart</h3>
+        <button class="close-btn" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+        <div class="cart-empty">Your cart is empty.<br>Add some products!</div>
+    </div>
+    <div class="cart-footer">
+        <div class="cart-total">
+            <span>Total</span>
+            <span id="cartTotal">₹0</span>
+        </div>
+        <button class="btn-checkout" onclick="checkout()">Proceed to Checkout →</button>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- FOOTER -->
+<footer>
+    <p>Made with ❤️ by <strong>Nitin Kumar &amp; Anshika</strong> &nbsp;|&nbsp; TechNest &copy; 2025</p>
+</footer>
+
+<script>
+    let cart = [];
+
+    function addToCart(name, price) {
+        const existing = cart.find(i => i.name === name);
+        if (existing) {
+            existing.qty += 1;
+        } else {
+            cart.push({ name, price, qty: 1 });
+        }
+        updateCartUI();
+        showToast('✓ ' + name + ' added to cart!');
+    }
+
+    function removeFromCart(name) {
+        cart = cart.filter(i => i.name !== name);
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        const count = cart.reduce((s, i) => s + i.qty, 0);
+        document.getElementById('cartCount').textContent = count;
+
+        const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+        document.getElementById('cartTotal').textContent = '₹' + total.toLocaleString('en-IN');
+
+        const container = document.getElementById('cartItems');
+        if (cart.length === 0) {
+            container.innerHTML = '<div class="cart-empty">Your cart is empty.<br>Add some products!</div>';
+            return;
+        }
+        container.innerHTML = cart.map(i => `
+            <div class="cart-item">
+                <div class="cart-item-name">${i.name} ${i.qty > 1 ? '× ' + i.qty : ''}</div>
+                <div class="cart-item-price">₹${(i.price * i.qty).toLocaleString('en-IN')}</div>
+                <button class="cart-item-remove" onclick="removeFromCart('${i.name}')">✕</button>
+            </div>
+        `).join('');
+    }
+
+    function openCart() {
+        document.getElementById('cartPanel').classList.add('open');
+        document.getElementById('cartOverlay').classList.add('open');
+    }
+
+    function closeCart() {
+        document.getElementById('cartPanel').classList.remove('open');
+        document.getElementById('cartOverlay').classList.remove('open');
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    function checkout() {
+        if (cart.length === 0) { showToast('Your cart is empty!'); return; }
+        showToast('🎉 Order placed! Thank you!');
+        cart = [];
+        updateCartUI();
+        closeCart();
+    }
+</script>
+</body>
+</html>
